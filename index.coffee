@@ -19,6 +19,10 @@ getBggEndpoint = (endpoint, params, next)->
   Nipple.get url, opts, (err, res, payload)->
     return next err if err
 
+    unless /xml/.test(res.headers['content-type'])
+      bggError = Hapi.error.notFound('BGG did not return XML. Most likely: Invalid object or user')
+      return next(bggError)
+
     parseString payload, (err, result) ->
       next err, result
 
