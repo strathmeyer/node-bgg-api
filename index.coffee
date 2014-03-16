@@ -24,7 +24,12 @@ getBggEndpoint = (endpoint, params, next)->
       return next(bggError)
 
     parseString payload, (err, result) ->
-      next err, result
+      return next err if err
+
+      if result.error
+        next Hapi.error.notFound(result.error.$.message)
+      else
+        next null, result
 
 MINUTE = 60 * 1000
 HOUR = 60 * MINUTE
