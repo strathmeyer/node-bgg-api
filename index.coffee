@@ -6,7 +6,7 @@ querystring = require 'querystring'
 
 port = process.env.PORT || 5000
 log "Listening on " + port
-server = Hapi.createServer 'localhost', port,
+server = Hapi.createServer '0.0.0.0', port,
   cache: 'catbox-memory'
   cors: true
   json:
