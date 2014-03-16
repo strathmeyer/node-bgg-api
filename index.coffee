@@ -1,7 +1,6 @@
 Hapi = require 'hapi'
 Nipple = require 'nipple'
 querystring = require 'querystring'
-_ = require 'lodash'
 {parseString} = require 'xml2js'
 {log} = console
 
