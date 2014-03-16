@@ -20,7 +20,7 @@ getBggEndpoint = (endpoint, params, next)->
     return next err if err
 
     parseString payload, (err, result) ->
-      next if err then err else result
+      next err, result
 
 MINUTE = 60 * 1000
 HOUR = 60 * MINUTE
