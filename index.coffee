@@ -5,10 +5,21 @@ querystring = require 'querystring'
 {parseString} = require 'xml2js'
 {log} = console
 
+cache_cfg = if process.env.REDISTOGO_URL
+  rtg = require("url").parse(process.env.REDISTOGO_URL)
+  {
+    engine: 'catbox-redis'
+    host: rtg.hostname
+    port: rtg.port
+    password: rtg.auth.split(":")[1]
+  }
+else
+  'catbox-redis'
+
 port = process.env.PORT || 5000
 log "Listening on " + port
 server = Hapi.createServer '0.0.0.0', port,
-  cache: 'catbox-memory'
+  cache: cache_cfg
   cors: true
   json:
     space: 2
