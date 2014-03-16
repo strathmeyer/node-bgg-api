@@ -4,7 +4,9 @@ querystring = require 'querystring'
 {parseString} = require 'xml2js'
 {log} = console
 
-server = Hapi.createServer 'localhost', 8000,
+port = process.env.PORT || 5000
+log "Listening on " + port
+server = Hapi.createServer 'localhost', port,
   cache: 'catbox-redis'
   cors: true
   json:
