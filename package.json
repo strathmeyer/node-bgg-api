@@ -15,7 +15,8 @@
     "nipple": "^2.4.0",
     "lodash": "^2.4.1",
     "xml2js": "^0.4.1",
-    "coffee-script": "^1.7.1"
+    "coffee-script": "^1.7.1",
+    "newrelic": "^1.4.0"
   },
   "engines": {
     "node": "0.10.x"
