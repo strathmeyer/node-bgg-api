@@ -1,5 +1,5 @@
 {
-  "name": "bggwtf",
+  "name": "bgg-api",
   "version": "0.0.1",
   "description": "Thin proxy with caching to the BGG XMLAPI2 http://boardgamegeek.com/wiki/page/BGG_XML_API2",
   "main": "index.coffee",
