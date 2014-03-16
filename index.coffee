@@ -1,46 +1,57 @@
 Hapi = require 'hapi'
-Faketoe = require 'faketoe'
 Nipple = require 'nipple'
-log = console.log
+querystring = require 'querystring'
+_ = require 'lodash'
+{parseString} = require 'xml2js'
+{log} = console
 
 server = Hapi.createServer 'localhost', 8000,
   cache: 'catbox-redis'
+  cors: true
+  json:
+    space: 2
 
 getBggEndpoint = (endpoint, params, next)->
-  parser = Faketoe.createParser (err, result)->
-    if err
-      next err
-    else
-      next null, result
+  query = querystring.stringify params
+  url = "http://boardgamegeek.com/xmlapi2/#{endpoint}?#{query}"
+  opts = {}
 
-  log 'making request!'
-  url = "http://boardgamegeek.com/xmlapi2/#{endpoint}"
-  Nipple.request 'GET', url, params, (err, res)->
+  log "making request to: #{url}"
+  Nipple.get url, opts, (err, res, payload)->
     if err
-      next err
-    else
-      res.pipe parser
+      return next err
 
+    parseString payload, (err, result) ->
+      next if err then err else result
+
+MINUTE = 60 * 1000
+HOUR = 60 * MINUTE
 server.method 'getBggEndpoint', getBggEndpoint,
   cache:
-    expiresIn: 10000
+    expiresIn: 6 * HOUR
   generateKey: (endpoint, params)->
     endpoint + JSON.stringify(params)
-
-bggHandler = (route)->
-  (request, reply)->
-    server.methods.getBggEndpoint route, {}, (err, result)->
-      if err
-        reply err
-      else
-        reply result
 
 bggRoute = (name)->
   server.route
     method: 'GET'
-    path: "/#{name}"
-    handler: bggHandler name
+    path: "/api/v1/#{name}"
+    handler: (request, reply)->
+      server.methods.getBggEndpoint name, request.query, (err, result)->
+        reply if err then err else result
 
-bggRoute 'hot'
+bggRoute route for route in [
+  'thing'
+  'family'
+  'forumlist'
+  'forum'
+  'thread'
+  'user'
+  'guild'
+  'plays'
+  'collection'
+  'hot'
+  'search'
+]
 
 server.start()

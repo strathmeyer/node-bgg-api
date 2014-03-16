@@ -1,0 +1,19 @@
+{
+  "name": "bggwtf",
+  "version": "0.0.1",
+  "description": "Thin proxy with caching to the BGG XMLAPI2 http://boardgamegeek.com/wiki/page/BGG_XML_API2",
+  "main": "index.coffee",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "strathmeyer",
+  "license": "ISC",
+  "dependencies": {
+    "hapi": "^3.0.0",
+    "catbox-redis": "^1.0.1",
+    "lab": "^1.8.0",
+    "nipple": "^2.4.0",
+    "lodash": "^2.4.1",
+    "xml2js": "^0.4.1"
+  }
+}
