@@ -17,8 +17,7 @@ getBggEndpoint = (endpoint, params, next)->
 
   log "making request to: #{url}"
   Nipple.get url, opts, (err, res, payload)->
-    if err
-      return next err
+    return next err if err
 
     parseString payload, (err, result) ->
       next if err then err else result
