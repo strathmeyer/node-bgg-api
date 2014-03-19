@@ -47,7 +47,9 @@ MINUTE = 60 * 1000
 HOUR = 60 * MINUTE
 server.method 'getBggEndpoint', getBggEndpoint,
   cache:
-    expiresIn: 6 * HOUR
+    expiresIn: 24 * HOUR
+    staleIn: 6 * HOUR
+    staleTimeout: 500
   generateKey: (endpoint, params)->
     endpoint + JSON.stringify(params)
 
