@@ -21,8 +21,6 @@ log "Listening on " + port
 server = Hapi.createServer '0.0.0.0', port,
   cache: cache_cfg
   cors: true
-  json:
-    space: 2
 
 getBggEndpoint = (endpoint, params, next)->
   query = querystring.stringify params
